@@ -227,6 +227,7 @@ class BatchRun:
     @staticmethod
     def is_labeled(function_str: str, line_number: int, file_name: str):
         split_strs = function_str.split("\n")
+        line_number -= 1 # index start by 0
         line_number = min(len(split_strs) - 1, line_number)
 
         if "XSS" in file_name and (
@@ -236,7 +237,7 @@ class BatchRun:
 
         while True:
             if "CWE" in split_strs[line_number]:
-                return False
+                return True
             if "POTENTIAL FLAW:" in split_strs[line_number]:
                 return True
             if (
